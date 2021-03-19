@@ -10,6 +10,7 @@ import com.sattar.githubusers.R
 import com.sattar.githubusers.data.remote.model.User
 import com.sattar.githubusers.databinding.ItemUserBinding
 
+
 class UserRecyclerViewAdapter() :
     ListAdapter<User, UserRecyclerViewAdapter.ViewHolder>(UsersDiff()) {
 

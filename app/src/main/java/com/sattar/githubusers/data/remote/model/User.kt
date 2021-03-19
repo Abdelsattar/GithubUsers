@@ -1,7 +1,14 @@
 package com.sattar.githubusers.data.remote.model
 
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import com.google.gson.annotations.SerializedName
+import com.squareup.picasso.Picasso
+
+
 data class User(
-    val avatar_url: String,
+    @SerializedName("avatar_url")
+    val imageUrl: String,
     val events_url: String,
     val followers_url: String,
     val following_url: String,
@@ -20,3 +27,8 @@ data class User(
     val type: String,
     val url: String
 )
+
+@BindingAdapter("imageUrl")
+fun loadImage(imageView: ImageView, imageUrl: String?) {
+    Picasso.get().load(imageUrl).into(imageView)
+}

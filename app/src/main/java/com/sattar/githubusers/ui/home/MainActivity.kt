@@ -2,11 +2,13 @@ package com.example.mvvmstarter.ui.home
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.GridLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import com.sattar.githubusers.R
 import com.sattar.githubusers.data.remote.model.ResultResource
 import com.sattar.githubusers.databinding.ActivityMainBinding
@@ -27,8 +29,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var mainViewModel: MainViewModel
 
-    private lateinit var binding: ActivityMainBinding
-
+//    private lateinit var binding: ActivityMainBinding
 
     private val binder by lazyThreadSafetyNone<ActivityMainBinding> {
         DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -38,21 +39,16 @@ class MainActivity : AppCompatActivity() {
 //        ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
 //    }
 
-//    private val viewModel by lazyThreadSafetyNone {
-//        ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        binder.rvUsers.layoutManager = GridLayoutManager(this,2)
         userAdapter = UserRecyclerViewAdapter()
 //        binder.viewModel = viewModel
         binder.adapter = userAdapter
 
         initScreen()
-
     }
 
     private fun initScreen() {

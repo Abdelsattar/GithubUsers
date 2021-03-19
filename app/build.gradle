@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.sattar.githubusers"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -40,6 +40,10 @@ android {
 
     dataBinding {
         enabled = true
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -83,6 +87,11 @@ dependencies {
     def rxVersion = "3.0.0"
     implementation "io.reactivex.rxjava3:rxandroid:$rxVersion"
     implementation "io.reactivex.rxjava3:rxjava:$rxVersion"
+
+    //loading images
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
 
 
 }
