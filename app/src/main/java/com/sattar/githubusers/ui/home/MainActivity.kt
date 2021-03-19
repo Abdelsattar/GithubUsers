@@ -1,22 +1,21 @@
-package com.example.mvvmstarter.ui.home
+package com.sattar.githubusers.ui.home
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.GridLayout
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sattar.githubusers.R
 import com.sattar.githubusers.data.remote.model.ResultResource
 import com.sattar.githubusers.databinding.ActivityMainBinding
 import com.sattar.githubusers.lazyThreadSafetyNone
-import com.sattar.githubusers.ui.home.MainViewModel
-import com.sattar.githubusers.ui.home.UserRecyclerViewAdapter
 import dagger.android.AndroidInjection
 import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +28,8 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var mainViewModel: MainViewModel
 
-//    private lateinit var binding: ActivityMainBinding
+    //    private lateinit var binding: ActivityMainBinding
+    var isList = true
 
     private val binder by lazyThreadSafetyNone<ActivityMainBinding> {
         DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        binder.rvUsers.layoutManager = GridLayoutManager(this,2)
+        binder.rvUsers.layoutManager = LinearLayoutManager(this)
         userAdapter = UserRecyclerViewAdapter()
 //        binder.viewModel = viewModel
         binder.adapter = userAdapter
@@ -80,6 +80,24 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    fun onChangeLayoutClicked(view: View) {
+
+        if (isList) {
+            //change to grid view
+            binder.imgListState.setImageResource(R.drawable.ic_list_24)
+            binder.rvUsers.layoutManager = GridLayoutManager(this, 2)
+        } else {
+            //change to list view
+            binder.imgListState.setImageResource(R.drawable.ic_grid_24)
+            binder.rvUsers.layoutManager = LinearLayoutManager(this)
+        }
+
+        userAdapter.notifyDataSetChanged()
+        isList = !isList
+
+
     }
 
 }

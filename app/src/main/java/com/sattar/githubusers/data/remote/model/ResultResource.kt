@@ -1,4 +1,3 @@
-
 package com.sattar.githubusers.data.remote.model
 
 sealed class ResultResource<out T> {
@@ -13,4 +12,9 @@ sealed class ResultResource<out T> {
     ) : ResultResource<Nothing>()
 
     object Loading : ResultResource<Nothing>()
+}
+
+sealed class listStatus {
+    class List()
+    class Grid()
 }

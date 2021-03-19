@@ -1,5 +1,6 @@
 package com.sattar.githubusers.data.remote.model
 
+import android.graphics.Color
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.google.gson.annotations.SerializedName
