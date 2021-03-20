@@ -10,18 +10,20 @@
             type="com.sattar.githubusers.data.remote.model.User" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="14dp"
+        android:layout_margin="@dimen/meduim_margin"
         android:orientation="horizontal">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgUser"
             imageUrl="@{user.image}"
-            android:layout_width="@dimen/user_image_width"
-            android:layout_height="@dimen/user_image_height"
+            android:layout_width="@dimen/itme_user_image_width"
+            android:layout_height="@dimen/item_user_image_height"
             android:src="@drawable/ic_deafult_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearance="@style/circleImageView"
             app:strokeColor="@android:color/black"
             app:strokeWidth="1dp"
@@ -36,9 +38,12 @@
             android:text="@{user.userName}"
             android:textColor="#000000"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/imgUser"
+            app:layout_constraintStart_toEndOf="@+id/imgUser"
+            app:layout_constraintTop_toTopOf="@id/imgUser"
             tools:text="Sattar" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sattar.githubusers.R
 import com.sattar.githubusers.data.remote.model.ResultResource
-import com.sattar.githubusers.databinding.ActivityMainBinding
 import com.sattar.githubusers.lazyThreadSafetyNone
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -31,9 +30,9 @@ class MainActivity : AppCompatActivity() {
     //    private lateinit var binding: ActivityMainBinding
     var isList = true
 
-    private val binder by lazyThreadSafetyNone<ActivityMainBinding> {
-        DataBindingUtil.setContentView(this, R.layout.activity_main)
-    }
+//    private val binder by lazyThreadSafetyNone<ActivityMainBinding> {
+//        DataBindingUtil.setContentView(this, R.layout.activity_main)
+//    }
 
 //    private val viewModel by lazyThreadSafetyNone {
 //        ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
@@ -41,9 +40,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+//        setContentView(R.layout.activity_main)
 
-        binder.rvUsers.layoutManager = LinearLayoutManager(this)
+//        binder.rvUsers.layoutManager = LinearLayoutManager(this)
 //        userAdapter = UserRecyclerViewAdapter()
 //        binder.viewModel = viewModel
 //        binder.adapter = userAdapter

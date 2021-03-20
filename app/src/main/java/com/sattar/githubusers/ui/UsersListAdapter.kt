@@ -1,5 +1,6 @@
 package com.sattar.githubusers.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -11,6 +12,10 @@ import com.sattar.githubusers.data.State
 import com.sattar.githubusers.data.remote.model.User
 import com.sattar.githubusers.databinding.ItemUserBinding
 
+interface onItemClickListener {
+    fun onItemClicked(user: User)
+}
+
 class UsersListAdapter(private val retry: () -> Unit) :
     PagedListAdapter<User, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
@@ -18,6 +23,11 @@ class UsersListAdapter(private val retry: () -> Unit) :
     private val FOOTER_VIEW_TYPE = 2
 
     private var state = State.LOADING
+    lateinit var mListener: onItemClickListener
+
+    fun onCLickListener(listener: onItemClickListener) {
+        mListener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == DATA_VIEW_TYPE) {
@@ -36,6 +46,10 @@ class UsersListAdapter(private val retry: () -> Unit) :
             val user = getItem(position)
             (holder as UserViewHolder).mBinding.user = user
             holder.mBinding.executePendingBindings()
+            holder.itemView.setOnClickListener { view ->
+                Log.e("Heelo form inside", "yees")
+                user?.let { it -> mListener.onItemClicked(it) }
+            }
 
         } else {
             (holder as ListFooterViewHolder).bind(state)
@@ -80,6 +94,7 @@ class UsersListAdapter(private val retry: () -> Unit) :
                         LayoutInflater.from(parent.context),
                         R.layout.item_user, parent, false
                     )
+
                 return UserViewHolder(binding)
             }
         }

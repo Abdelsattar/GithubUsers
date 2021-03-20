@@ -1,19 +1,23 @@
 package com.sattar.githubusers.ui
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.sattar.githubusers.data.State
 import com.sattar.githubusers.data.UsersDataSource
+import com.sattar.githubusers.data.UsersDataSourceFactory
 import com.sattar.githubusers.data.remote.model.User
 import com.sattar.githubusers.data.remote.service.UsersService
-import com.sattar.githubusers.data.UsersDataSourceFactory
+import com.sattar.githubusers.di.ViewModelAssistedFactory
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class UsersListViewModel @Inject constructor(private val networkService: UsersService): ViewModel() {
+class UsersListViewModel @Inject constructor(
+    private val networkService: UsersService) :
+    ViewModel() {
 
     var usersList: LiveData<PagedList<User>>
     private val compositeDisposable = CompositeDisposable()

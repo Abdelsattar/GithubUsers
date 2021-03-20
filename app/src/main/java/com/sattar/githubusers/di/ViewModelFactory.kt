@@ -1,5 +1,6 @@
 package com.sattar.githubusers.di
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
@@ -33,4 +34,8 @@ class ViewModelFactory @Inject constructor(
             throw RuntimeException(e)
         }
     }
+}
+
+interface ViewModelAssistedFactory<T : ViewModel> {
+    fun create(handle: SavedStateHandle): T
 }

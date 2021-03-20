@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Github Users</string>
     <string name="error_tap_to_retry">Error! Tap to retry</string>
+    <string name="txt_type">Type</string>
 </resources>

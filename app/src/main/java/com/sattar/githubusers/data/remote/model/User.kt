@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter
 import com.google.gson.annotations.SerializedName
 import com.sattar.githubusers.R
 import com.squareup.picasso.Picasso
+import java.io.Serializable
 
 
 data class User(
@@ -28,7 +29,7 @@ data class User(
     val subscriptions_url: String,
     val type: String,
     val url: String
-)
+) : Serializable
 
 @BindingAdapter("imageUrl")
 fun loadImage(imageView: ImageView, imageUrl: String?) {

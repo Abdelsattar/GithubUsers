@@ -1,5 +1,6 @@
 package com.sattar.githubusers.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -9,13 +10,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sattar.githubusers.KEY_USER
 import com.sattar.githubusers.R
 import com.sattar.githubusers.data.State
+import com.sattar.githubusers.data.remote.model.User
 import com.sattar.githubusers.databinding.ActivityUsersListBinding
 import dagger.android.AndroidInjection
+import java.io.Serializable
 import javax.inject.Inject
 
-class UsersListActivity : AppCompatActivity() {
+class UsersListActivity : AppCompatActivity(), onItemClickListener {
 
     //    private lateinit var viewModel: UsersListViewModel
     private lateinit var usersListAdapter: UsersListAdapter
@@ -36,6 +40,7 @@ class UsersListActivity : AppCompatActivity() {
 
         binding = ActivityUsersListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         initAdapter()
@@ -43,15 +48,16 @@ class UsersListActivity : AppCompatActivity() {
     }
 
 
-
     private fun initAdapter() {
-        usersListAdapter =
-            UsersListAdapter { viewModel.retry() }
+        usersListAdapter = UsersListAdapter { viewModel.retry() }
+        usersListAdapter.onCLickListener(this)
         binding.rvUsers.adapter = usersListAdapter
         viewModel.usersList.observe(this,
             Observer {
                 usersListAdapter.submitList(it)
             })
+
+
     }
 
     private fun initState() {
@@ -85,4 +91,9 @@ class UsersListActivity : AppCompatActivity() {
 
     }
 
+    override fun onItemClicked(user: User) {
+        val intent = Intent(this, UserDetailsActivity::class.java)
+        intent.putExtra(KEY_USER, user as Serializable)
+        startActivity(intent)
+    }
 }
