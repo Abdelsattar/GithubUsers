@@ -32,7 +32,7 @@ class NetworkModule {
     }
 
     @Provides
-    fun getPhotosService(retrofit: Retrofit): UsersService {
+    fun getUserService(retrofit: Retrofit): UsersService {
         return retrofit.create(UsersService::class.java)
     }
 

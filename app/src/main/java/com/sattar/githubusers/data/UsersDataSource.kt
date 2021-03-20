@@ -6,6 +6,7 @@ import androidx.paging.PageKeyedDataSource
 import com.sattar.githubusers.data.State.DONE
 import com.sattar.githubusers.data.State.ERROR
 import com.sattar.githubusers.data.remote.model.User
+import com.sattar.githubusers.data.remote.service.UsersService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -13,7 +14,7 @@ import io.reactivex.rxjava3.functions.Action
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class UsersDataSource(
-    private val networkService: NetworkService,
+    private val usersService: UsersService,
     private val compositeDisposable: CompositeDisposable
 ) : PageKeyedDataSource<Int, User>() {
 
@@ -27,7 +28,7 @@ class UsersDataSource(
     ) {
         updateState(State.LOADING)
         compositeDisposable.add(
-            networkService.getUsers(0, params.requestedLoadSize)
+            usersService.getUsers(0, params.requestedLoadSize)
                 .subscribe(
                     { users ->
                         Log.e("Load size", "${params.requestedLoadSize}")
@@ -50,7 +51,7 @@ class UsersDataSource(
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
         updateState(State.LOADING)
         compositeDisposable.add(
-            networkService.getUsers(params.key, params.requestedLoadSize)
+            usersService.getUsers(params.key, params.requestedLoadSize)
                 .subscribe(
                     { users ->
                         updateState(DONE)

@@ -11,14 +11,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sattar.githubusers.R
 import com.sattar.githubusers.data.State
-import com.sattar.githubusers.ui.home.MainViewModel
-import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.viewModel.UsersListViewModel
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_users_list.*
 import javax.inject.Inject
 
 class UsersListActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: UsersListViewModel
+//    private lateinit var viewModel: UsersListViewModel
     private lateinit var usersListAdapter: UsersListAdapter
     var isList = true
 
@@ -26,14 +25,15 @@ class UsersListActivity : AppCompatActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var usersViewModel: UsersListViewModel
+    lateinit var viewModel: UsersListViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_users_list)
+        AndroidInjection.inject(this)
 
-        viewModel = ViewModelProvider(this).get(UsersListViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(UsersListViewModel::class.java)
         initAdapter()
         initState()
     }

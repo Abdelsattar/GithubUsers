@@ -1,20 +1,20 @@
-package com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.viewModel
+package com.sattar.githubusers.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.sattar.githubusers.data.NetworkService
 import com.sattar.githubusers.data.State
 import com.sattar.githubusers.data.UsersDataSource
 import com.sattar.githubusers.data.remote.model.User
-import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.data.UsersDataSourceFactory
+import com.sattar.githubusers.data.remote.service.UsersService
+import com.sattar.githubusers.data.UsersDataSourceFactory
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import javax.inject.Inject
 
-class UsersListViewModel : ViewModel() {
+class UsersListViewModel @Inject constructor(private val networkService: UsersService): ViewModel() {
 
-    private val networkService = NetworkService.getService()
     var usersList: LiveData<PagedList<User>>
     private val compositeDisposable = CompositeDisposable()
     private val pageSize = 14
@@ -25,7 +25,7 @@ class UsersListViewModel : ViewModel() {
         val config = PagedList.Config.Builder()
             .setPageSize(pageSize)
             .setInitialLoadSizeHint(pageSize * 3)
-            .setEnablePlaceholders(false)
+            .setEnablePlaceholders(true)
             .build()
         usersList = LivePagedListBuilder(usersDataSourceFactory, config).build()
     }
