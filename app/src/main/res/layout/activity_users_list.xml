@@ -61,6 +61,7 @@
         android:id="@+id/txtError"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:text="@string/error_tap_to_retry"
         android:gravity="center" />
 
     <androidx.recyclerview.widget.RecyclerView

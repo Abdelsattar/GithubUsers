@@ -20,7 +20,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
 
-    private lateinit var userAdapter: UserRecyclerViewAdapter
+//    private lateinit var userAdapter: UserRecyclerViewAdapter
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         binder.rvUsers.layoutManager = LinearLayoutManager(this)
-        userAdapter = UserRecyclerViewAdapter()
+//        userAdapter = UserRecyclerViewAdapter()
 //        binder.viewModel = viewModel
 //        binder.adapter = userAdapter
 
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                 is ResultResource.Success -> {
                     Log.e("Main", "Success")
                     Log.e("Main", "${it.value.size}")
-                    it.value.let(userAdapter::submitList)
+//                    it.value.let(userAdapter::submitList)
 
 //                loading.cancel()
 //                if (it.value.code == 200) {
@@ -82,22 +82,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun onChangeLayoutClicked(view: View) {
 
-        if (isList) {
-            //change to grid view
-            binder.imgListState.setImageResource(R.drawable.ic_list_24)
-            binder.rvUsers.layoutManager = GridLayoutManager(this, 2)
-        } else {
-            //change to list view
-            binder.imgListState.setImageResource(R.drawable.ic_grid_24)
-            binder.rvUsers.layoutManager = LinearLayoutManager(this)
-        }
-
-        userAdapter.notifyDataSetChanged()
-        isList = !isList
-
-
-    }
 
 }

@@ -32,8 +32,6 @@ class UsersListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_users_list)
         AndroidInjection.inject(this)
-
-//        viewModel = ViewModelProvider(this).get(UsersListViewModel::class.java)
         initAdapter()
         initState()
     }

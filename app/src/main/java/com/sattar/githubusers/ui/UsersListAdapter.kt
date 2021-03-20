@@ -1,14 +1,18 @@
 package com.sattar.githubusers.ui
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.sattar.githubusers.R
 import com.sattar.githubusers.data.State
 import com.sattar.githubusers.data.remote.model.User
+import com.sattar.githubusers.databinding.ItemUserBinding
 
-class UsersListAdapter(private val retry: () -> Unit)
-    : PagedListAdapter<User, RecyclerView.ViewHolder>(NewsDiffCallback) {
+class UsersListAdapter(private val retry: () -> Unit) :
+    PagedListAdapter<User, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
     private val DATA_VIEW_TYPE = 1
     private val FOOTER_VIEW_TYPE = 2
@@ -16,16 +20,26 @@ class UsersListAdapter(private val retry: () -> Unit)
     private var state = State.LOADING
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == DATA_VIEW_TYPE) UsersViewHolder.create(parent) else ListFooterViewHolder.create(
-            retry,
-            parent
-        )
+        return if (viewType == DATA_VIEW_TYPE) {
+            UserViewHolder.create(parent)
+
+        } else {
+            ListFooterViewHolder.create(
+                retry,
+                parent
+            )
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (getItemViewType(position) == DATA_VIEW_TYPE)
-            (holder as UsersViewHolder).bind(getItem(position))
-        else (holder as ListFooterViewHolder).bind(state)
+        if (getItemViewType(position) == DATA_VIEW_TYPE) {
+            val user = getItem(position)
+            (holder as UserViewHolder).mBinding.user = user
+            holder.mBinding.executePendingBindings()
+
+        } else {
+            (holder as ListFooterViewHolder).bind(state)
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -56,4 +70,20 @@ class UsersListAdapter(private val retry: () -> Unit)
         this.state = state
         notifyItemChanged(super.getItemCount())
     }
+
+    class UserViewHolder(var mBinding: ItemUserBinding) : RecyclerView.ViewHolder(mBinding.root) {
+
+        companion object {
+            fun create(parent: ViewGroup): UserViewHolder {
+                val binding: ItemUserBinding =
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.item_user, parent, false
+                    )
+                return UserViewHolder(binding)
+            }
+        }
+    }
+
+
 }

@@ -19,12 +19,12 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgUser"
             imageUrl="@{user.image}"
-            app:strokeWidth="1dp"
-            app:strokeColor="@android:color/black"
             android:layout_width="@dimen/user_image_width"
             android:layout_height="@dimen/user_image_height"
-            tools:src="@drawable/ic_launcher_background"
+            android:src="@drawable/ic_deafult_avatar"
             app:shapeAppearance="@style/circleImageView"
+            app:strokeColor="@android:color/black"
+            app:strokeWidth="1dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView

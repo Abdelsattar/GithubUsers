@@ -3,6 +3,7 @@ package com.sattar.githubusers.data.remote.model
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.google.gson.annotations.SerializedName
+import com.sattar.githubusers.R
 import com.squareup.picasso.Picasso
 
 
@@ -31,5 +32,6 @@ data class User(
 
 @BindingAdapter("imageUrl")
 fun loadImage(imageView: ImageView, imageUrl: String?) {
-    Picasso.get().load(imageUrl).into(imageView)
+    Picasso.get().load(imageUrl).placeholder(R.drawable.ic_deafult_avatar)
+        .error(R.drawable.ic_deafult_avatar).into(imageView)
 }
