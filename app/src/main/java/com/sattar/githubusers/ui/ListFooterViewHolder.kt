@@ -1,4 +1,4 @@
-package com.sattar.githubusers.adapter
+package com.sattar.githubusers.ui
 
 import android.view.LayoutInflater
 import android.view.View

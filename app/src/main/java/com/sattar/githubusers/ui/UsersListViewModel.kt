@@ -6,42 +6,42 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.sattar.githubusers.data.NetworkService
-import com.sattar.githubusers.data.News
-import com.sattar.githubusers.data.UsersDataSource
 import com.sattar.githubusers.data.State
-import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.data.*
+import com.sattar.githubusers.data.UsersDataSource
+import com.sattar.githubusers.data.remote.model.User
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.data.UsersDataSourceFactory
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class UsersListViewModel : ViewModel() {
 
     private val networkService = NetworkService.getService()
-    var newsList: LiveData<PagedList<News>>
+    var usersList: LiveData<PagedList<User>>
     private val compositeDisposable = CompositeDisposable()
-    private val pageSize = 10
-    private val newsDataSourceFactory:UsersDataSourceFactory
+    private val pageSize = 14
+    private val usersDataSourceFactory: UsersDataSourceFactory
 
     init {
-        newsDataSourceFactory = UsersDataSourceFactory(compositeDisposable, networkService)
+        usersDataSourceFactory = UsersDataSourceFactory(compositeDisposable, networkService)
         val config = PagedList.Config.Builder()
-                .setPageSize(pageSize)
-                .setInitialLoadSizeHint(pageSize * 2)
-                .setEnablePlaceholders(false)
-                .build()
-        newsList = LivePagedListBuilder(newsDataSourceFactory, config).build()
+            .setPageSize(pageSize)
+            .setInitialLoadSizeHint(pageSize * 3)
+            .setEnablePlaceholders(false)
+            .build()
+        usersList = LivePagedListBuilder(usersDataSourceFactory, config).build()
     }
 
 
     fun getState(): LiveData<State> = Transformations.switchMap(
-            newsDataSourceFactory.newsDataSourceLiveData,
-            UsersDataSource::state
+        usersDataSourceFactory.usersDataSourceLiveData,
+        UsersDataSource::state
     )
 
     fun retry() {
-        newsDataSourceFactory.newsDataSourceLiveData.value?.retry()
+        usersDataSourceFactory.usersDataSourceLiveData.value?.retry()
     }
 
     fun listIsEmpty(): Boolean {
-        return newsList.value?.isEmpty() ?: true
+        return usersList.value?.isEmpty() ?: true
     }
 
     override fun onCleared() {

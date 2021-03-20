@@ -1,4 +1,4 @@
-package com.sattar.githubusers.activity
+package com.sattar.githubusers.ui
 
 import android.os.Bundle
 import android.view.View
@@ -10,10 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sattar.githubusers.R
-import com.sattar.githubusers.adapter.UsersListAdapter
 import com.sattar.githubusers.data.State
+import com.sattar.githubusers.ui.home.MainViewModel
 import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.viewModel.UsersListViewModel
-import kotlinx.android.synthetic.main.activity_news_list.*
+import kotlinx.android.synthetic.main.activity_users_list.*
+import javax.inject.Inject
 
 class UsersListActivity : AppCompatActivity() {
 
@@ -21,9 +22,16 @@ class UsersListActivity : AppCompatActivity() {
     private lateinit var usersListAdapter: UsersListAdapter
     var isList = true
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var usersViewModel: UsersListViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news_list)
+        setContentView(R.layout.activity_users_list)
 
         viewModel = ViewModelProvider(this).get(UsersListViewModel::class.java)
         initAdapter()
@@ -31,9 +39,10 @@ class UsersListActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        usersListAdapter = UsersListAdapter { viewModel.retry() }
+        usersListAdapter =
+            UsersListAdapter { viewModel.retry() }
         rvUsers.adapter = usersListAdapter
-        viewModel.newsList.observe(this,
+        viewModel.usersList.observe(this,
                 Observer {
                     usersListAdapter.submitList(it)
                 })

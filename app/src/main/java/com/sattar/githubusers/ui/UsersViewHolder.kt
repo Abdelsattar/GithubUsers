@@ -1,21 +1,21 @@
-package com.sattar.githubusers.adapter
+package com.sattar.githubusers.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sattar.githubusers.R
-import com.sattar.githubusers.data.News
+import com.sattar.githubusers.data.remote.model.User
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_user.view.*
 
 class UsersViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(news: News?) {
-        if (news != null) {
-            itemView.txtUserName.text = news.title
-            if (!news.image.isNullOrEmpty())
-                Picasso.get().load(news.image).into(itemView.imgUser)
+    fun bind(users: User?) {
+        if (users != null) {
+            itemView.txtUserName.text = users.userName
+            if (!users.image.isNullOrEmpty())
+                Picasso.get().load(users.image).into(itemView.imgUser)
         }
     }
 

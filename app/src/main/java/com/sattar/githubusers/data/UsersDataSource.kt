@@ -1,9 +1,11 @@
 package com.sattar.githubusers.data
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.sattar.githubusers.data.State.DONE
 import com.sattar.githubusers.data.State.ERROR
+import com.sattar.githubusers.data.remote.model.User
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -13,7 +15,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class UsersDataSource(
     private val networkService: NetworkService,
     private val compositeDisposable: CompositeDisposable
-) : PageKeyedDataSource<Int, News>() {
+) : PageKeyedDataSource<Int, User>() {
 
     var state: MutableLiveData<State> = MutableLiveData()
     private var retryCompletable: Completable? = null
@@ -21,18 +23,20 @@ class UsersDataSource(
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, News>
+        callback: LoadInitialCallback<Int, User>
     ) {
         updateState(State.LOADING)
         compositeDisposable.add(
-            networkService.getUsers(1, params.requestedLoadSize)
+            networkService.getUsers(0, params.requestedLoadSize)
                 .subscribe(
-                    { response ->
+                    { users ->
+                        Log.e("Load size", "${params.requestedLoadSize}")
+                        val nexPageKey = users[users.size - 1].id
                         updateState(DONE)
                         callback.onResult(
-                            response,
+                            users,
                             null,
-                            2
+                            nexPageKey
                         )
                     },
                     {
@@ -43,16 +47,18 @@ class UsersDataSource(
         )
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, News>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
         updateState(State.LOADING)
         compositeDisposable.add(
             networkService.getUsers(params.key, params.requestedLoadSize)
                 .subscribe(
-                    { response ->
+                    { users ->
                         updateState(DONE)
+                        val nexPageKey = users[users.size - 1].id
+
                         callback.onResult(
-                            response,
-                            params.key + 1
+                            users,
+                            nexPageKey
                         )
                     },
                     {
@@ -63,7 +69,7 @@ class UsersDataSource(
         )
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, News>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
     }
 
     private fun updateState(state: State) {

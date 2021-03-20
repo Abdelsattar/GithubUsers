@@ -1,5 +1,6 @@
 package com.sattar.githubusers.data
 
+import com.sattar.githubusers.data.remote.model.User
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
@@ -11,9 +12,9 @@ interface NetworkService {
 
     @GET("users")
     fun getUsers(
-            @Query("since") page: Int,
-            @Query("per_page") pageSize: Int
-    ): Single<List<News>>
+        @Query("since") since: Int,
+        @Query("per_page") perPage: Int
+    ): Single<List<User>>
 
     companion object {
         fun getService(): NetworkService {

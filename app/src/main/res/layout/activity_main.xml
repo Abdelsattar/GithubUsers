@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.home.MainActivity">
 
-    <data>
+<!--    <data>-->
+
+<!--&lt;!&ndash;        <variable&ndash;&gt;-->
+<!--&lt;!&ndash;            name="adapter"&ndash;&gt;-->
+<!--&lt;!&ndash;            type="com.sattar.githubusers.ui.home.UserRecyclerViewAdapter" />&ndash;&gt;-->
 
 <!--        <variable-->
-<!--            name="adapter"-->
-<!--            type="com.sattar.githubusers.ui.home.UserRecyclerViewAdapter" />-->
-
-        <variable
-            name="viewModel"
-            type="com.sattar.githubusers.ui.home.MainViewModel" />
-    </data>
+<!--            name="viewModel"-->
+<!--            type="com.sattar.githubusers.ui.home.MainViewModel" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
