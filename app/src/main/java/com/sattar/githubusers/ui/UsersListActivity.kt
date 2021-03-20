@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sattar.githubusers.R
 import com.sattar.githubusers.data.State
+import com.sattar.githubusers.databinding.ActivityUsersListBinding
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_users_list.*
 import javax.inject.Inject
 
 class UsersListActivity : AppCompatActivity() {
 
-//    private lateinit var viewModel: UsersListViewModel
+    //    private lateinit var viewModel: UsersListViewModel
     private lateinit var usersListAdapter: UsersListAdapter
     var isList = true
 
@@ -27,30 +27,40 @@ class UsersListActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModel: UsersListViewModel
 
+    private lateinit var binding: ActivityUsersListBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_users_list)
         AndroidInjection.inject(this)
+
+        binding = ActivityUsersListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.viewModel = viewModel
+
         initAdapter()
         initState()
     }
 
+
+
     private fun initAdapter() {
         usersListAdapter =
             UsersListAdapter { viewModel.retry() }
-        rvUsers.adapter = usersListAdapter
+        binding.rvUsers.adapter = usersListAdapter
         viewModel.usersList.observe(this,
-                Observer {
-                    usersListAdapter.submitList(it)
-                })
+            Observer {
+                usersListAdapter.submitList(it)
+            })
     }
 
     private fun initState() {
-        txtError.setOnClickListener { viewModel.retry() }
+        binding.txtError.setOnClickListener { viewModel.retry() }
         viewModel.getState().observe(this, Observer { state ->
-            progressBar.visibility = if (viewModel.listIsEmpty() && state == State.LOADING) VISIBLE else GONE
-            txtError.visibility = if (viewModel.listIsEmpty() && state == State.ERROR) VISIBLE else GONE
+            binding.progressBar.visibility =
+                if (viewModel.listIsEmpty() && state == State.LOADING) VISIBLE else GONE
+            binding.txtError.visibility =
+                if (viewModel.listIsEmpty() && state == State.ERROR) VISIBLE else GONE
             if (!viewModel.listIsEmpty()) {
                 usersListAdapter.setState(state ?: State.DONE)
             }
@@ -61,12 +71,12 @@ class UsersListActivity : AppCompatActivity() {
 
         if (isList) {
             //change to grid view
-            imgListState.setImageResource(R.drawable.ic_list_24)
-            rvUsers.layoutManager = GridLayoutManager(this, 2)
+            binding.imgListState.setImageResource(R.drawable.ic_list_24)
+            binding.rvUsers.layoutManager = GridLayoutManager(this, 2)
         } else {
             //change to list view
-            imgListState.setImageResource(R.drawable.ic_grid_24)
-            rvUsers.layoutManager = LinearLayoutManager(this)
+            binding.imgListState.setImageResource(R.drawable.ic_grid_24)
+            binding.rvUsers.layoutManager = LinearLayoutManager(this)
         }
 
         usersListAdapter.notifyDataSetChanged()
