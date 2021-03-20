@@ -5,19 +5,23 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.sattar.githubusers.data.NetworkService
+import com.sattar.githubusers.data.News
+import com.sattar.githubusers.data.UsersDataSource
+import com.sattar.githubusers.data.State
 import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.data.*
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
-class NewsListViewModel : ViewModel() {
+class UsersListViewModel : ViewModel() {
 
     private val networkService = NetworkService.getService()
     var newsList: LiveData<PagedList<News>>
     private val compositeDisposable = CompositeDisposable()
-    private val pageSize = 5
-    private val newsDataSourceFactory: NewsDataSourceFactory
+    private val pageSize = 10
+    private val newsDataSourceFactory:UsersDataSourceFactory
 
     init {
-        newsDataSourceFactory = NewsDataSourceFactory(compositeDisposable, networkService)
+        newsDataSourceFactory = UsersDataSourceFactory(compositeDisposable, networkService)
         val config = PagedList.Config.Builder()
                 .setPageSize(pageSize)
                 .setInitialLoadSizeHint(pageSize * 2)
@@ -29,7 +33,7 @@ class NewsListViewModel : ViewModel() {
 
     fun getState(): LiveData<State> = Transformations.switchMap(
             newsDataSourceFactory.newsDataSourceLiveData,
-            NewsDataSource::state
+            UsersDataSource::state
     )
 
     fun retry() {

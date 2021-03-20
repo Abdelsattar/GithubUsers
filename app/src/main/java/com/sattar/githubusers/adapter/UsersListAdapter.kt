@@ -1,13 +1,13 @@
-package com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.adapter
+package com.sattar.githubusers.adapter
 
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.data.News
-import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.data.State
+import com.sattar.githubusers.data.News
+import com.sattar.githubusers.data.State
 
-class NewsListAdapter(private val retry: () -> Unit)
+class UsersListAdapter(private val retry: () -> Unit)
     : PagedListAdapter<News, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
     private val DATA_VIEW_TYPE = 1
@@ -16,12 +16,12 @@ class NewsListAdapter(private val retry: () -> Unit)
     private var state = State.LOADING
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == DATA_VIEW_TYPE) NewsViewHolder.create(parent) else ListFooterViewHolder.create(retry, parent)
+        return if (viewType == DATA_VIEW_TYPE) UsersViewHolder.create(parent) else ListFooterViewHolder.create(retry, parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == DATA_VIEW_TYPE)
-            (holder as NewsViewHolder).bind(getItem(position))
+            (holder as UsersViewHolder).bind(getItem(position))
         else (holder as ListFooterViewHolder).bind(state)
     }
 

@@ -1,4 +1,4 @@
-package com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.data
+package com.sattar.githubusers.data
 
 import com.google.gson.annotations.SerializedName
 

@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         binder.rvUsers.layoutManager = LinearLayoutManager(this)
         userAdapter = UserRecyclerViewAdapter()
 //        binder.viewModel = viewModel
-        binder.adapter = userAdapter
+//        binder.adapter = userAdapter
 
         initScreen()
     }
