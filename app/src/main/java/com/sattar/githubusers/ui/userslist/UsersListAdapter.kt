@@ -1,6 +1,5 @@
-package com.sattar.githubusers.ui
+package com.sattar.githubusers.ui.userslist
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,9 +7,10 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sattar.githubusers.R
-import com.sattar.githubusers.data.State
+import com.sattar.githubusers.data.paging.State
 import com.sattar.githubusers.data.remote.model.User
-import com.sattar.githubusers.databinding.ItemUserBinding
+import com.sattar.githubusers.databinding.ItemUserGridBinding
+import com.sattar.githubusers.databinding.ItemUserListBinding
 
 interface onItemClickListener {
     fun onItemClicked(user: User)
@@ -19,7 +19,9 @@ interface onItemClickListener {
 class UsersListAdapter(private val retry: () -> Unit) :
     PagedListAdapter<User, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
-    private val DATA_VIEW_TYPE = 1
+    //    private val DATA_VIEW_TYPE = 1
+    private val LIST_VIEW_TYPE = 0
+    private val GRID_VIEW_TYPE = 1
     private val FOOTER_VIEW_TYPE = 2
 
     private var state = State.LOADING
@@ -30,9 +32,14 @@ class UsersListAdapter(private val retry: () -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == DATA_VIEW_TYPE) {
-            UserViewHolder.create(parent)
-
+        return if (viewType == LIST_VIEW_TYPE) {
+            UserListViewHolder.create(
+                parent
+            )
+        } else if (viewType == GRID_VIEW_TYPE) {
+            UserGridViewHolder.create(
+                parent
+            )
         } else {
             ListFooterViewHolder.create(
                 retry,
@@ -42,22 +49,42 @@ class UsersListAdapter(private val retry: () -> Unit) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (getItemViewType(position) == DATA_VIEW_TYPE) {
+        val viewType = getItemViewType(position)
+        if (viewType == LIST_VIEW_TYPE) {
             val user = getItem(position)
-            (holder as UserViewHolder).mBinding.user = user
+            (holder as UserListViewHolder).mBinding.user = user
             holder.mBinding.executePendingBindings()
             holder.itemView.setOnClickListener { view ->
-                Log.e("Heelo form inside", "yees")
                 user?.let { it -> mListener.onItemClicked(it) }
             }
 
+        } else if (viewType == GRID_VIEW_TYPE) {
+            val user = getItem(position)
+            (holder as UserGridViewHolder).mBinding.user = user
+            holder.mBinding.executePendingBindings()
+            holder.itemView.setOnClickListener { view ->
+                user?.let { it -> mListener.onItemClicked(it) }
+            }
         } else {
             (holder as ListFooterViewHolder).bind(state)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position < super.getItemCount()) DATA_VIEW_TYPE else FOOTER_VIEW_TYPE
+        return if (position < super.getItemCount()) {
+            if (isGridView) {
+                GRID_VIEW_TYPE
+            } else {
+                LIST_VIEW_TYPE
+            }
+        } else FOOTER_VIEW_TYPE
+    }
+
+    var isGridView = false
+
+    fun toggleItemViewType(): Boolean {
+        isGridView = !isGridView
+        return isGridView
     }
 
     companion object {
@@ -85,20 +112,40 @@ class UsersListAdapter(private val retry: () -> Unit) :
         notifyItemChanged(super.getItemCount())
     }
 
-    class UserViewHolder(var mBinding: ItemUserBinding) : RecyclerView.ViewHolder(mBinding.root) {
+    class UserListViewHolder(var mBinding: ItemUserListBinding) :
+        RecyclerView.ViewHolder(mBinding.root) {
 
         companion object {
-            fun create(parent: ViewGroup): UserViewHolder {
-                val binding: ItemUserBinding =
+            fun create(parent: ViewGroup): UserListViewHolder {
+                val binding: ItemUserListBinding =
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_user, parent, false
+                        R.layout.item_user_list, parent, false
                     )
 
-                return UserViewHolder(binding)
+                return UserListViewHolder(
+                    binding
+                )
             }
         }
     }
 
+    class UserGridViewHolder(var mBinding: ItemUserGridBinding) :
+        RecyclerView.ViewHolder(mBinding.root) {
+
+        companion object {
+            fun create(parent: ViewGroup): UserGridViewHolder {
+                val binding: ItemUserGridBinding =
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.item_user_grid, parent, false
+                    )
+
+                return UserGridViewHolder(
+                    binding
+                )
+            }
+        }
+    }
 
 }

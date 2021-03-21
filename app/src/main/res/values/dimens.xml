@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="item_user_image_height">48dp</dimen>
-    <dimen name="itme_user_image_width">48dp</dimen>
-
+    <dimen name="item_user_image_height">56dp</dimen>
+    <dimen name="itme_user_image_width">56dp</dimen>
 
     <dimen name="user_details_image_height">64dp</dimen>
     <dimen name="user_details_image_width">64dp</dimen>
 
 
-    <dimen name="meduim_margin">16dp</dimen>
+    <dimen name="medium_margin">16dp</dimen>
     <dimen name="xsmall_margin">8dp</dimen>
+
     <dimen name="large_font">24sp</dimen>
+    <dimen name="medium_font">18sp</dimen>
+
+    <dimen name="list_item_text_font">24sp</dimen>
 </resources>

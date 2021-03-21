@@ -1,22 +1,23 @@
-package com.sattar.githubusers.ui
+package com.sattar.githubusers.ui.userslist
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.sattar.githubusers.data.State
-import com.sattar.githubusers.data.UsersDataSource
-import com.sattar.githubusers.data.UsersDataSourceFactory
+import com.sattar.githubusers.data.paging.State
+import com.sattar.githubusers.data.paging.UsersDataSource
+import com.sattar.githubusers.data.paging.UsersDataSourceFactory
 import com.sattar.githubusers.data.remote.model.User
 import com.sattar.githubusers.data.remote.service.UsersService
-import com.sattar.githubusers.di.ViewModelAssistedFactory
+import com.sattar.githubusers.di.BaseSchedulerProvider
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class UsersListViewModel @Inject constructor(
-    private val networkService: UsersService) :
+    private val usersService: UsersService,
+    private val baseSchedulerProvider: BaseSchedulerProvider
+) :
     ViewModel() {
 
     var usersList: LiveData<PagedList<User>>
@@ -25,7 +26,12 @@ class UsersListViewModel @Inject constructor(
     private val usersDataSourceFactory: UsersDataSourceFactory
 
     init {
-        usersDataSourceFactory = UsersDataSourceFactory(compositeDisposable, networkService)
+        usersDataSourceFactory =
+            UsersDataSourceFactory(
+                compositeDisposable,
+                usersService,
+                baseSchedulerProvider
+            )
         val config = PagedList.Config.Builder()
             .setPageSize(pageSize)
             .setInitialLoadSizeHint(pageSize * 3)

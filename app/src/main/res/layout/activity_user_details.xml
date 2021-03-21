@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout>
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="user"
@@ -14,7 +15,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.UserDetailsActivity">
+        tools:context=".ui.userDetails.UserDetailsActivity">
 
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -37,10 +38,11 @@
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_name"
+                    android:text="@{user.userName}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/imgListState"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/app_name" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/imgListState"
@@ -48,8 +50,8 @@
                     android:layout_height="?attr/actionBarSize"
                     android:background="?selectableItemBackground"
                     android:onClick="onChangeLayoutClicked"
-                    android:visibility="gone"
                     android:src="@drawable/ic_grid_24"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -64,8 +66,8 @@
             imageUrl="@{user.image}"
             android:layout_width="@dimen/user_details_image_width"
             android:layout_height="@dimen/user_details_image_height"
-            android:layout_marginStart="@dimen/meduim_margin"
-            android:layout_marginTop="@dimen/meduim_margin"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/medium_margin"
             android:src="@drawable/ic_deafult_avatar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/materialToolBar"
@@ -80,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/xsmall_margin"
-            android:text="@{user.userName}"
+            android:text="@{user.name}"
             android:textColor="#000000"
             android:textSize="@dimen/large_font"
             android:textStyle="bold"
@@ -99,7 +101,7 @@
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/imgUser"
             app:layout_constraintTop_toBottomOf="@id/txtFullName"
-            tools:text="Sattar" />
+            tools:text="Abdelsattar" />
 
 
         <TextView
@@ -107,26 +109,114 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/meduim_margin"
-            android:text="@{user.userName}"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:text="@{user.bio}"
             android:textColor="#000000"
             android:textSize="18sp"
+            android:visibility="@{user.bio !=null ? View.VISIBLE : View.GONE }"
             app:layout_constraintStart_toStartOf="@+id/imgUser"
             app:layout_constraintTop_toBottomOf="@id/imgUser"
             tools:text="this will be and intro about myself" />
 
 
-        <TextView
-            android:id="@+id/userType"
+        <ImageView
+            android:id="@+id/imgLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/txt_type"
-            android:textColor="#000000"
-            android:textSize="18sp"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:src="@drawable/ic_location_24"
+            android:visibility="@{user.location !=null ? View.VISIBLE : View.GONE }"
             app:layout_constraintStart_toStartOf="@+id/imgUser"
             app:layout_constraintTop_toBottomOf="@id/txtUserIntro"
             tools:text="Type" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/xsmall_margin"
+            android:text="@{user.location}"
+            android:textSize="@dimen/medium_font"
+
+            android:visibility="@{user.location !=null ? View.VISIBLE : View.GONE }"
+            app:layout_constraintBottom_toBottomOf="@id/imgLocation"
+            app:layout_constraintStart_toEndOf="@id/imgLocation"
+            app:layout_constraintTop_toTopOf="@id/imgLocation"
+            tools:text="Berlin, Germany" />
+
+
+        <ImageView
+            android:id="@+id/imgLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:src="@drawable/ic_link_24"
+            android:visibility="@{user.blog !=null ? View.VISIBLE : View.GONE }"
+            app:layout_constraintStart_toStartOf="@+id/imgLocation"
+            app:layout_constraintTop_toBottomOf="@id/imgLocation" />
+
+        <TextView
+            android:id="@+id/txtWebsiteLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/xsmall_margin"
+            android:text="@{user.blog}"
+            android:textSize="@dimen/medium_font"
+
+            android:visibility="@{user.blog !=null ? View.VISIBLE : View.GONE }"
+            app:layout_constraintBottom_toBottomOf="@id/imgLink"
+            app:layout_constraintStart_toEndOf="@id/imgLink"
+            app:layout_constraintTop_toTopOf="@id/imgLink"
+            tools:text="https://github.com/Abdelsattar" />
+
+        <ImageView
+            android:id="@+id/imgEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:src="@drawable/ic_email_24"
+            android:visibility="@{user.email !=null ? View.VISIBLE : View.GONE }"
+            app:layout_constraintStart_toStartOf="@+id/imgLink"
+            app:layout_constraintTop_toBottomOf="@id/imgLink"
+            tools:text="Type" />
+
+        <TextView
+            android:id="@+id/txtEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/xsmall_margin"
+            android:text="@{user.email}"
+            android:textSize="@dimen/medium_font"
+            android:visibility="@{user.email !=null ? View.VISIBLE : View.GONE }"
+            app:layout_constraintBottom_toBottomOf="@id/imgEmail"
+            app:layout_constraintStart_toEndOf="@id/imgEmail"
+            app:layout_constraintTop_toTopOf="@id/imgEmail"
+            tools:text="m.abdelsattarahmed@gmail.com" />
+
+
+        <ImageView
+            android:id="@+id/imgPeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:src="@drawable/ic_person_24"
+            app:layout_constraintStart_toStartOf="@+id/imgEmail"
+            app:layout_constraintTop_toBottomOf="@id/imgEmail" />
+
+        <TextView
+            android:id="@+id/txtPeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/xsmall_margin"
+            android:text="@{@string/txt_people(user.following, user.followers)}"
+            android:textSize="@dimen/medium_font"
+            app:layout_constraintBottom_toBottomOf="@id/imgPeople"
+            app:layout_constraintStart_toEndOf="@id/imgPeople"
+            app:layout_constraintTop_toTopOf="@id/imgPeople"
+            tools:text="27 followers. 64 following" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

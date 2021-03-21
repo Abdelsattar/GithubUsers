@@ -1,21 +1,21 @@
-package com.sattar.githubusers.data
+package com.sattar.githubusers.data.paging
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import com.sattar.githubusers.data.State.DONE
-import com.sattar.githubusers.data.State.ERROR
+import com.sattar.githubusers.data.paging.State.DONE
+import com.sattar.githubusers.data.paging.State.ERROR
 import com.sattar.githubusers.data.remote.model.User
 import com.sattar.githubusers.data.remote.service.UsersService
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import com.sattar.githubusers.di.BaseSchedulerProvider
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.functions.Action
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 class UsersDataSource(
     private val usersService: UsersService,
-    private val compositeDisposable: CompositeDisposable
+    private val compositeDisposable: CompositeDisposable,
+    private val baseSchedulerProvider: BaseSchedulerProvider
 ) : PageKeyedDataSource<Int, User>() {
 
     var state: MutableLiveData<State> = MutableLiveData()
@@ -81,8 +81,8 @@ class UsersDataSource(
         if (retryCompletable != null) {
             compositeDisposable.add(
                 retryCompletable!!
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(baseSchedulerProvider.io())
+                    .observeOn(baseSchedulerProvider.ui())
                     .subscribe()
             )
         }

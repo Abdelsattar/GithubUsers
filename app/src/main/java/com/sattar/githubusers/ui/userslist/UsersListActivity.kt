@@ -1,4 +1,4 @@
-package com.sattar.githubusers.ui
+package com.sattar.githubusers.ui.userslist
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,14 +12,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sattar.githubusers.KEY_USER
 import com.sattar.githubusers.R
-import com.sattar.githubusers.data.State
+import com.sattar.githubusers.data.paging.State
 import com.sattar.githubusers.data.remote.model.User
 import com.sattar.githubusers.databinding.ActivityUsersListBinding
+import com.sattar.githubusers.ui.userDetails.UserDetailsActivity
 import dagger.android.AndroidInjection
 import java.io.Serializable
 import javax.inject.Inject
 
-class UsersListActivity : AppCompatActivity(), onItemClickListener {
+class UsersListActivity : AppCompatActivity(),
+    onItemClickListener {
 
     //    private lateinit var viewModel: UsersListViewModel
     private lateinit var usersListAdapter: UsersListAdapter
@@ -49,7 +51,8 @@ class UsersListActivity : AppCompatActivity(), onItemClickListener {
 
 
     private fun initAdapter() {
-        usersListAdapter = UsersListAdapter { viewModel.retry() }
+        usersListAdapter =
+            UsersListAdapter { viewModel.retry() }
         usersListAdapter.onCLickListener(this)
         binding.rvUsers.adapter = usersListAdapter
         viewModel.usersList.observe(this,
@@ -85,6 +88,7 @@ class UsersListActivity : AppCompatActivity(), onItemClickListener {
             binding.rvUsers.layoutManager = LinearLayoutManager(this)
         }
 
+        usersListAdapter.toggleItemViewType()
         usersListAdapter.notifyDataSetChanged()
         isList = !isList
 

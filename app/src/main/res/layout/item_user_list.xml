@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.sattar.githubusers.data.remote.model.User" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/xsmall_margin"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgUser"
+            imageUrl="@{user.image}"
+            android:layout_width="@dimen/itme_user_image_width"
+            android:layout_height="@dimen/item_user_image_height"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/xsmall_margin"
+            android:layout_marginBottom="@dimen/xsmall_margin"
+            android:src="@drawable/ic_deafult_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/circleImageView"
+            app:strokeColor="@android:color/black"
+            app:strokeWidth="1dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/txtUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:text="@{user.userName}"
+            android:textColor="#000000"
+            android:textSize="@dimen/list_item_text_font"
+            app:layout_constraintBottom_toBottomOf="@id/imgUser"
+            app:layout_constraintStart_toEndOf="@+id/imgUser"
+            app:layout_constraintTop_toTopOf="@id/imgUser"
+            tools:text="Sattar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
+

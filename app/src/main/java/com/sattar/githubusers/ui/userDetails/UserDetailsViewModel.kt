@@ -1,34 +1,38 @@
-package com.sattar.githubusers.ui.home
+package com.sattar.githubusers.ui.userDetails
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sattar.githubusers.data.remote.UsersRepo
 import com.sattar.githubusers.data.remote.model.ResultResource
 import com.sattar.githubusers.data.remote.model.User
+import com.sattar.githubusers.data.remote.reposotires.UsersRepository
 import com.sattar.githubusers.di.BaseSchedulerProvider
-
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.io.IOException
 import javax.inject.Inject
 
-
-class MainViewModel @Inject constructor(
-    private val usersRepo: UsersRepo,
+/**
+ * Created by Sattar on 20.03.21.
+ */
+class UserDetailsViewModel @Inject constructor(
+    private val usersRepository: UsersRepository,
     private val schedulerProvider: BaseSchedulerProvider
 ) : ViewModel() {
 
 
     private val disposables = CompositeDisposable()
-    private val usersResponse = MutableLiveData<ResultResource<List<User>>>()
+    private val usersResponse = MutableLiveData<ResultResource<User>>()
 
-    fun getUsers(): MutableLiveData<ResultResource<List<User>>> {
+    fun getUser(userName: String): MutableLiveData<ResultResource<User>> {
+
         disposables.add(
-            usersRepo.getUsers(0, 20)
+            usersRepository.getUser(userName)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribe({ response: List<User> ->
+                .subscribe({ response: User ->
 
                     usersResponse.value = ResultResource.Success(response)
+                    Log.e("UserResponse", "${usersResponse.value}" )
 
                 }, { t: Throwable? ->
                     usersResponse.value = if (t is IOException) {
@@ -49,5 +53,4 @@ class MainViewModel @Inject constructor(
         super.onCleared()
         disposables.dispose()
     }
-
 }

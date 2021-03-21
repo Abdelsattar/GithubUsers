@@ -28,7 +28,20 @@ data class User(
     val starred_url: String,
     val subscriptions_url: String,
     val type: String,
-    val url: String
+    val url: String,
+    val bio: String,
+    val blog: String,
+    val company: String,
+    val email: String,
+    val followers: Int,
+    val following: Int,
+    val location: String,
+    val name: String,
+    @SerializedName("public_gists")
+    val publicGists: Int,
+    @SerializedName("public_repos")
+    val publicRepos: Int
+
 ) : Serializable
 
 @BindingAdapter("imageUrl")

@@ -1,4 +1,4 @@
-package com.sattar.githubusers.ui
+package com.sattar.githubusers.ui.userslist
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sattar.githubusers.R
-import com.sattar.githubusers.data.State
+import com.sattar.githubusers.data.paging.State
 import kotlinx.android.synthetic.main.item_list_footer.view.*
 
 class ListFooterViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -7,14 +7,8 @@ sealed class ResultResource<out T> {
     data class Failure(
         val isNetworkError: Boolean,
         val errorCode: Int?,
-//        val errorBody: ResponseBody?
         val errorBody: String?
     ) : ResultResource<Nothing>()
 
     object Loading : ResultResource<Nothing>()
-}
-
-sealed class listStatus {
-    class List()
-    class Grid()
 }

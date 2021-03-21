@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/meduim_margin"
+        android:layout_margin="@dimen/medium_margin"
+        android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -21,7 +22,9 @@
             imageUrl="@{user.image}"
             android:layout_width="@dimen/itme_user_image_width"
             android:layout_height="@dimen/item_user_image_height"
+            android:layout_marginTop="@dimen/xsmall_margin"
             android:src="@drawable/ic_deafult_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearance="@style/circleImageView"
@@ -34,13 +37,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="8dp"
             android:text="@{user.userName}"
             android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@id/imgUser"
-            app:layout_constraintStart_toEndOf="@+id/imgUser"
-            app:layout_constraintTop_toTopOf="@id/imgUser"
+            android:textSize="@dimen/list_item_text_font"
+            app:layout_constraintEnd_toEndOf="@id/imgUser"
+            app:layout_constraintStart_toStartOf="@+id/imgUser"
+            app:layout_constraintTop_toBottomOf="@id/imgUser"
             tools:text="Sattar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
