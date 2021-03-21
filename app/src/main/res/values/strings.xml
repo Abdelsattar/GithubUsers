@@ -6,4 +6,9 @@
 
     <string name="txt_people">%d followers. %d following </string>
 
+    <string name="txt_people2"><![CDATA[
+    <p></p
+    <p> <b>%d</b> followers. <b>%d</b> following </p> ]]></string>
+    <string name="txt_error_user_data">Error getting user data</string>
+
 </resources>

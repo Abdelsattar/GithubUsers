@@ -78,7 +78,7 @@ internal class UserDetailsViewModelTest {
         `when`(
             usersRepository.getUser(ArgumentMatchers.anyString())
         ).thenAnswer {
-            Single.just("{}")
+            Single.just(User())
         }
 
         subject.getUser("anything")
@@ -105,7 +105,7 @@ internal class UserDetailsViewModelTest {
 
 
     @Test
-    fun `should return failure with throw Network error  `() {
+    fun `should return failure with throw Network error `() {
         val expectedException = ResultResource.Failure(true,0,null)
 
         `when`(usersRepository.getUser(ArgumentMatchers.anyString()))

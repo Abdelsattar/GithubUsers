@@ -13,5 +13,5 @@
     <dimen name="large_font">24sp</dimen>
     <dimen name="medium_font">18sp</dimen>
 
-    <dimen name="list_item_text_font">24sp</dimen>
+    <dimen name="list_item_text_font">16sp</dimen>
 </resources>

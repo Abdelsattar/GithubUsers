@@ -4,6 +4,7 @@
     <data>
 
         <import type="android.view.View" />
+        <import type="android.text.Html" />
 
         <variable
             name="user"
@@ -97,7 +98,6 @@
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
             android:text="@{user.userName}"
-            android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/imgUser"
             app:layout_constraintTop_toBottomOf="@id/txtFullName"
@@ -162,8 +162,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/xsmall_margin"
             android:text="@{user.blog}"
+            android:textColor="@color/black"
             android:textSize="@dimen/medium_font"
-
             android:visibility="@{user.blog !=null ? View.VISIBLE : View.GONE }"
             app:layout_constraintBottom_toBottomOf="@id/imgLink"
             app:layout_constraintStart_toEndOf="@id/imgLink"
@@ -188,6 +188,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/xsmall_margin"
             android:text="@{user.email}"
+            android:textColor="@color/black"
             android:textSize="@dimen/medium_font"
             android:visibility="@{user.email !=null ? View.VISIBLE : View.GONE }"
             app:layout_constraintBottom_toBottomOf="@id/imgEmail"
@@ -213,6 +214,7 @@
             android:layout_marginStart="@dimen/xsmall_margin"
             android:text="@{@string/txt_people(user.following, user.followers)}"
             android:textSize="@dimen/medium_font"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@id/imgPeople"
             app:layout_constraintStart_toEndOf="@id/imgPeople"
             app:layout_constraintTop_toTopOf="@id/imgPeople"

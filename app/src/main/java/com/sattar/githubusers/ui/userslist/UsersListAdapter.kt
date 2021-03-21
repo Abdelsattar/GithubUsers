@@ -1,16 +1,11 @@
 package com.sattar.githubusers.ui.userslist
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.sattar.githubusers.R
 import com.sattar.githubusers.data.paging.State
 import com.sattar.githubusers.data.remote.model.User
-import com.sattar.githubusers.databinding.ItemUserGridBinding
-import com.sattar.githubusers.databinding.ItemUserListBinding
 
 interface onItemClickListener {
     fun onItemClicked(user: User)
@@ -19,7 +14,6 @@ interface onItemClickListener {
 class UsersListAdapter(private val retry: () -> Unit) :
     PagedListAdapter<User, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
-    //    private val DATA_VIEW_TYPE = 1
     private val LIST_VIEW_TYPE = 0
     private val GRID_VIEW_TYPE = 1
     private val FOOTER_VIEW_TYPE = 2
@@ -110,42 +104,6 @@ class UsersListAdapter(private val retry: () -> Unit) :
     fun setState(state: State) {
         this.state = state
         notifyItemChanged(super.getItemCount())
-    }
-
-    class UserListViewHolder(var mBinding: ItemUserListBinding) :
-        RecyclerView.ViewHolder(mBinding.root) {
-
-        companion object {
-            fun create(parent: ViewGroup): UserListViewHolder {
-                val binding: ItemUserListBinding =
-                    DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_user_list, parent, false
-                    )
-
-                return UserListViewHolder(
-                    binding
-                )
-            }
-        }
-    }
-
-    class UserGridViewHolder(var mBinding: ItemUserGridBinding) :
-        RecyclerView.ViewHolder(mBinding.root) {
-
-        companion object {
-            fun create(parent: ViewGroup): UserGridViewHolder {
-                val binding: ItemUserGridBinding =
-                    DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_user_grid, parent, false
-                    )
-
-                return UserGridViewHolder(
-                    binding
-                )
-            }
-        }
     }
 
 }

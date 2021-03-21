@@ -4,6 +4,8 @@ import android.R
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,7 +24,6 @@ class UserDetailsActivity : AppCompatActivity() {
 
     @Inject
     lateinit var userDetailsViewModel: UserDetailsViewModel
-
 
     private lateinit var binding: ActivityUserDetailsBinding
 
@@ -48,16 +49,18 @@ class UserDetailsActivity : AppCompatActivity() {
         userDetailsViewModel.getUser(user.userName).observe(this, Observer {
             when (it) {
                 is ResultResource.Success -> {
-                    Log.e("Main", "Success")
-                    Log.e("Main", "${it.value}")
                     binding.user = it.value
 
                 }
                 is ResultResource.Failure -> {
-                    Log.e("Main", "failure")
+                    Toast.makeText(
+                        this,
+                        getString(com.sattar.githubusers.R.string.txt_error_user_data),
+                        LENGTH_SHORT
+                    ).show()
                 }
                 is ResultResource.Loading -> {
-                    Log.e("Main", "loading")
+                    Log.d("getting user info ", "loading")
 
                 }
             }

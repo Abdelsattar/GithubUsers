@@ -3,8 +3,6 @@ package com.sattar.githubusers.ui.userslist
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,8 +20,6 @@ import javax.inject.Inject
 
 class UsersListActivity : AppCompatActivity(),
     onItemClickListener {
-
-    //    private lateinit var viewModel: UsersListViewModel
     private lateinit var usersListAdapter: UsersListAdapter
     var isList = true
 
@@ -66,10 +62,6 @@ class UsersListActivity : AppCompatActivity(),
     private fun initState() {
         binding.txtError.setOnClickListener { viewModel.retry() }
         viewModel.getState().observe(this, Observer { state ->
-            binding.progressBar.visibility =
-                if (viewModel.listIsEmpty() && state == State.LOADING) VISIBLE else GONE
-            binding.txtError.visibility =
-                if (viewModel.listIsEmpty() && state == State.ERROR) VISIBLE else GONE
             if (!viewModel.listIsEmpty()) {
                 usersListAdapter.setState(state ?: State.DONE)
             }
